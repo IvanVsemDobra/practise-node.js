@@ -1,6 +1,7 @@
 import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
+import { errors } from 'celebrate';
 import productsRotes from './routes/productsRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 
@@ -21,6 +22,7 @@ app.use(authRoutes);
 app.use(productsRotes);
 
 app.use(notFoundHandler);
+app.use(errors());
 app.use(errorHandler);
 
 await connectMongoDB();
