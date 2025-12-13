@@ -2,6 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import productsRotes from './routes/productsRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { errorHandler } from './middleware/errorHandler.js';
@@ -11,8 +12,10 @@ const app = express();
 const PORT = process.env.PORT ?? 3030;
 
 app.use(express.json());
+
 app.use(cors());
 
+app.use(authRoutes);
 app.use(productsRotes);
 
 app.use(notFoundHandler);
