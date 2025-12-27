@@ -5,7 +5,7 @@ export const upload = multer({
   limits: { fileSize: 2 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowedTypes = [
-      'images/jpeg',
+      'image/jpeg',
       'image/jpg',
       'image/png',
       'image/gif',
