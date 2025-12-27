@@ -5,6 +5,7 @@ import { createSession, setSessionCookies } from '../services/auth.js';
 import { Session } from '../models/session.js';
 import { sendEmail } from '../utils/sendMail.js';
 import jwt from 'jsonwebtoken';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const registerUser = async (req, res) => {
   const { userName, email, password } = req.body;
@@ -105,3 +106,14 @@ export const resetPassword = async (req, res) => {
   await Session.deleteMany({ userId: user._id });
   res.status(200).json({message: 'Password reset successfully'})
 };
+export const updateUserAvatar = async (req, res) => {
+  if (!req.file) {
+    throw createHttpError(400, 'No file');
+  }
+  const result = await saveFileToCloudinary(req.file.buffer, req.user._id);
+  const updatedUser = await User.findByIdAndUpdate(req.user._id,
+    { avatar: result.secure_url },
+    { new: true },
+  );
+  res.status(200).json({ url: updatedUser.avatar });
+}

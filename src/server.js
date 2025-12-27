@@ -4,6 +4,7 @@ import cors from 'cors';
 import { errors } from 'celebrate';
 import productsRotes from './routes/productsRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import usersRoutes from './routes/usersRoutes.js';
 
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { errorHandler } from './middleware/errorHandler.js';
@@ -19,6 +20,7 @@ app.use(cors());
 app.use(cookieParser());
 
 app.use(authRoutes);
+app.use(usersRoutes);
 app.use(productsRotes);
 
 app.use(notFoundHandler);
